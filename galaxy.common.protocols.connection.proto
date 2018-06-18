@@ -1,0 +1,12 @@
+syntax = "proto2";
+
+package galaxy.common.protocols.connection
+
+message Ping {
+    optional uint32_t PingTime = 1;
+}
+
+message Pong {
+    optional uint32_t PingTime = 1;
+}
+

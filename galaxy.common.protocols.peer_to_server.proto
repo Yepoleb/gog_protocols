@@ -1,0 +1,144 @@
+syntax = "proto2";
+
+package galaxy.common.protocols.peer_to_server
+
+message CreateLobbyRequest {
+    optional uint32_t LobbyId = 1;
+    optional uint32_t NatType = 2;
+    optional uint32_t TopologyType = 3;
+    optional uint32_t Metadata = 4;
+    optional uint32_t PeerType = 5;
+}
+
+message CreateLobbyResponse {
+    optional uint32_t LobbyId = 1;
+    optional uint32_t Success = 2;
+}
+
+message CustomProxyingPacket {
+    optional uint32_t Channel = 1;
+    optional uint32_t LobbyId = 2;
+    optional uint32_t ReceiverId = 3;
+    optional uint32_t SenderId = 4;
+    optional uint32_t Seq = 5;
+    optional uint32_t Data = 6;
+}
+
+message GalaxyLobbyMemberInfo {
+    optional uint32_t MemberId = 1;
+    optional uint32_t UserId = 2;
+    optional uint32_t NatType = 3;
+    optional uint32_t PublicKey = 4;
+    optional uint32_t Address = 5;
+    optional uint32_t DirectConnectionsAllowed = 6;
+}
+
+message JoinLobbyRequest {
+    optional uint32_t LobbyId = 1;
+    optional uint32_t NatType = 2;
+    optional uint32_t PeerType = 3;
+}
+
+message JoinLobbyResponse {
+    optional uint32_t LobbyId = 1;
+    optional uint32_t Success = 2;
+    optional uint32_t GalaxyMemberInfos = 3;
+    optional uint32_t JoiningGalaxyMemberInfos = 4;
+    optional uint32_t TopologyType = 5;
+    optional uint32_t OwnerId = 6;
+}
+
+message LeaveLobbyNotification {
+    optional uint32_t LobbyId = 1;
+}
+
+message LobbyEnteredNotification {
+    optional uint32_t LobbyId = 1;
+    optional uint32_t OwnerId = 2;
+    optional uint32_t Metadata = 3;
+    optional uint32_t Properties = 4;
+    optional uint32_t Members = 5;
+}
+
+message LobbyEnteredNotification_MemberProperties {
+    optional uint32_t MemberId = 1;
+    optional uint32_t Properties = 2;
+}
+
+message LobbyLeftNotification {
+    optional uint32_t LobbyId = 1;
+    optional uint32_t LeaveReason = 2;
+}
+
+message LobbyMemberPropertiesNotification {
+    optional uint32_t LobbyId = 1;
+    optional uint32_t MemberId = 2;
+    optional uint32_t Properties = 3;
+}
+
+message LobbyMessage {
+    optional uint32_t LobbyId = 1;
+    optional uint32_t MemberId = 2;
+    optional uint32_t Data = 3;
+}
+
+message LobbyMetadata {
+    optional uint32_t MemberMaxCount = 1;
+    optional uint32_t LobbyType = 2;
+    optional uint32_t Joinable = 3;
+}
+
+message LobbyPingStatistics {
+    optional uint32_t LobbyId = 1;
+    optional uint32_t PingsToMember = 2;
+}
+
+message LobbyPingStatistics_PingsToMember {
+    optional uint32_t MemberId = 1;
+    optional uint32_t Ping = 2;
+}
+
+message LobbyPropertiesNotification {
+    optional uint32_t LobbyId = 1;
+    optional uint32_t Metadata = 2;
+    optional uint32_t Properties = 3;
+}
+
+message MemberInfo {
+    optional uint32_t SdkVersion = 1;
+    optional uint32_t ClientId = 2;
+}
+
+message MemberJoinedNotification {
+    optional uint32_t LobbyId = 1;
+    optional uint32_t GalaxyMemberInfo = 2;
+}
+
+message MemberLeftNotification {
+    optional uint32_t LobbyId = 1;
+    optional uint32_t MemberId = 2;
+    optional uint32_t LeaveReason = 3;
+}
+
+message NetworkAddress {
+    optional uint32_t Host = 1;
+    optional uint32_t Port = 2;
+}
+
+message NewLobbyOwnerNotification {
+    optional uint32_t LobbyId = 1;
+    optional uint32_t NewOwnerId = 2;
+}
+
+message NewLobbyOwnerVote {
+    optional uint32_t LobbyId = 1;
+    optional uint32_t MemberId = 2;
+}
+
+message PeerConnectionStateChangeReport {
+    optional uint32_t LobbyId = 1;
+    optional uint32_t MemberId = 2;
+    optional uint32_t StateChange = 3;
+    optional uint32_t PublicKey = 4;
+}
+

@@ -1,0 +1,274 @@
+syntax = "proto2";
+
+package galaxy.protocols.communication_service
+
+message AbortStorageSynchronizationRequest {
+    optional uint32_t ClientId = 1;
+}
+
+message AuthInfoRequest {
+    optional uint32_t ClientId = 1;
+    optional uint32_t ClientSecret = 2;
+    optional uint32_t PlatformType = 3;
+    optional uint32_t SteamTicket = 4;
+    optional uint32_t GamePid = 5;
+}
+
+message AuthInfoResponse {
+    optional uint32_t RefreshToken = 1;
+    optional uint32_t EnvironmentType = 2;
+    optional uint32_t UserId = 3;
+    optional uint32_t UserName = 4;
+    optional uint32_t Region = 5;
+}
+
+message AuthStateChangeNotification {
+    optional uint32_t RefreshToken = 1;
+}
+
+message ClearUserAchievementRequest {
+    optional uint32_t AchievementId = 1;
+}
+
+message ConfigureEnvironmentRequest {
+    optional uint32_t EnvironmentType = 1;
+    optional uint32_t Region = 2;
+}
+
+message CreateLeaderboardRequest {
+    optional uint32_t Key = 1;
+    optional uint32_t Name = 2;
+    optional uint32_t SortMethod = 3;
+    optional uint32_t DisplayType = 4;
+}
+
+message CreateLeaderboardResponse {
+    optional uint32_t LeaderboardId = 1;
+}
+
+message GetCachedUserAchievementsRequest {
+    optional uint32_t ClientId = 1;
+}
+
+message GetGlobalStatsRequest {
+    optional uint32_t Days = 1;
+}
+
+message GetGlobalStatsResponse {
+    optional uint32_t GlobalStats = 1;
+}
+
+message GetGlobalStatsResponse_GlobalStat {
+    optional uint32_t StatId = 1;
+    optional uint32_t Key = 2;
+    optional uint32_t ValueType = 3;
+    optional uint32_t FloatValue = 4;
+    optional uint32_t IntValue = 5;
+    optional uint32_t WindowSize = 6;
+}
+
+message GetLeaderboardEntriesAroundUserRequest {
+    optional uint32_t LeaderboardId = 1;
+    optional uint32_t UserId = 2;
+    optional uint32_t CountBefore = 3;
+    optional uint32_t CountAfter = 4;
+}
+
+message GetLeaderboardEntriesForUsersRequest {
+    optional uint32_t LeaderboardId = 1;
+    optional uint32_t UserIds = 2;
+}
+
+message GetLeaderboardEntriesGlobalRequest {
+    optional uint32_t LeaderboardId = 1;
+    optional uint32_t RangeStart = 2;
+    optional uint32_t RangeEnd = 3;
+}
+
+message GetLeaderboardEntriesResponse {
+    optional uint32_t LeaderboardEntries = 1;
+    optional uint32_t LeaderboardEntryTotalCount = 2;
+}
+
+message GetLeaderboardEntriesResponse_LeaderboardEntry {
+    optional uint32_t Rank = 1;
+    optional uint32_t Score = 2;
+    optional uint32_t UserId = 3;
+    optional uint32_t Details = 4;
+}
+
+message GetLeaderboardsByKeyRequest {
+    optional uint32_t Key = 1;
+}
+
+message GetLeaderboardsResponse {
+    optional uint32_t LeaderboardDefinitions = 1;
+}
+
+message GetLeaderboardsResponse_LeaderboardDefinition {
+    optional uint32_t LeaderboardId = 1;
+    optional uint32_t Key = 2;
+    optional uint32_t Name = 3;
+    optional uint32_t SortMethod = 4;
+    optional uint32_t DisplayType = 5;
+}
+
+message GetUserAchievementsRequest {
+    optional uint32_t UserId = 1;
+}
+
+message GetUserAchievementsResponse {
+    optional uint32_t UserAchievements = 1;
+    optional uint32_t Language = 2;
+    optional uint32_t AchievementsMode = 3;
+}
+
+message GetUserAchievementsResponse_UserAchievement {
+    optional uint32_t AchievementId = 1;
+    optional uint32_t Key = 2;
+    optional uint32_t Name = 3;
+    optional uint32_t Description = 4;
+    optional uint32_t ImageUrlLocked = 5;
+    optional uint32_t ImageUrlUnlocked = 6;
+    optional uint32_t VisibleWhileLocked = 7;
+    optional uint32_t UnlockTime = 8;
+    optional uint32_t Rarity = 9;
+    optional uint32_t RarityLevelDescription = 10;
+    optional uint32_t RarityLevelSlug = 11;
+}
+
+message GetUserStatsRequest {
+    optional uint32_t UserId = 1;
+}
+
+message GetUserStatsResponse {
+    optional uint32_t UserStats = 1;
+}
+
+message GetUserStatsResponse_UserStat {
+    optional uint32_t StatId = 1;
+    optional uint32_t Key = 2;
+    optional uint32_t ValueType = 3;
+    optional uint32_t FloatValue = 4;
+    optional uint32_t IntValue = 5;
+    optional uint32_t WindowSize = 6;
+    optional uint32_t FloatDefaultValue = 7;
+    optional uint32_t IntDefaultValue = 8;
+    optional uint32_t FloatMinValue = 9;
+    optional uint32_t IntMinValue = 10;
+    optional uint32_t FloatMaxValue = 11;
+    optional uint32_t IntMaxValue = 12;
+    optional uint32_t FloatMaxChange = 13;
+    optional uint32_t IntMaxChange = 14;
+    optional uint32_t IncrementOnly = 15;
+}
+
+message GetUserTimePlayedRequest {
+    optional uint32_t UserId = 1;
+}
+
+message GetUserTimePlayedResponse {
+    optional uint32_t TimePlayed = 1;
+}
+
+message LibraryInfoRequest {
+    optional uint32_t Bitness = 1;
+    optional uint32_t CompilerType = 2;
+    optional uint32_t CompilerVersion = 3;
+}
+
+message LibraryInfoResponse {
+    optional uint32_t Location = 1;
+    optional uint32_t UpdateStatus = 2;
+}
+
+message OverlayStateChangeNotification {
+    optional uint32_t OverlayState = 1;
+}
+
+message SetLeaderboardScoreRequest {
+    optional uint32_t LeaderboardId = 1;
+    optional uint32_t Score = 2;
+    optional uint32_t ForceUpdate = 3;
+    optional uint32_t Details = 4;
+}
+
+message SetLeaderboardScoreResponse {
+    optional uint32_t Score = 1;
+    optional uint32_t OldRank = 2;
+    optional uint32_t NewRank = 3;
+    optional uint32_t LeaderboardEntryTotalCount = 4;
+}
+
+message ShareFileRequest {
+    optional uint32_t Filename = 1;
+}
+
+message ShareFileResponse {
+    optional uint32_t FileHandle = 1;
+}
+
+message StartGameSessionRequest {
+    optional uint32_t GamePid = 1;
+    optional uint32_t OverlaySupport = 2;
+}
+
+message StartOverlaySessionRequest {
+    optional uint32_t GamePid = 1;
+}
+
+message StartStorageSynchronizationRequest {
+    optional uint32_t Locations = 1;
+    optional uint32_t ClientId = 2;
+    optional uint32_t ClientSecret = 3;
+    optional uint32_t InstallationId = 4;
+    optional uint32_t SynchronizationPolicy = 5;
+    optional uint32_t SynchronizationModifierFlags = 6;
+}
+
+message StartStorageSynchronizationRequest_StorageLocation {
+    optional uint32_t Name = 1;
+    optional uint32_t Path = 2;
+}
+
+message StorageSynchronizationFailureNotification {
+    optional uint32_t ClientId = 2;
+    optional uint32_t FailureReason = 3;
+    optional uint32_t ConflictDetails = 4;
+    optional uint32_t QuotaExceededDetails = 5;
+}
+
+message StorageSynchronizationFailureNotification_ConflictDetails {
+    optional uint32_t LocalStorageLastModifiedTime = 1;
+    optional uint32_t RemoteStorageLastModifiedTime = 2;
+}
+
+message StorageSynchronizationFailureNotification_QuotaExceededDetails {
+    optional uint32_t QuotaBytes = 1;
+    optional uint32_t QuotaUsedBytes = 2;
+    optional uint32_t RequiredBytes = 3;
+    optional uint32_t RequiredUploads = 4;
+}
+
+message StorageSynchronizationProgressNotification {
+    optional uint32_t ProgressFractionNumerator = 1;
+    optional uint32_t ProgressFractionDenominator = 2;
+    optional uint32_t ClientId = 3;
+}
+
+message StorageSynchronizationSuccessNotification {
+    optional uint32_t ClientId = 2;
+}
+
+message UnlockUserAchievementRequest {
+    optional uint32_t AchievementId = 1;
+    optional uint32_t Time = 2;
+}
+
+message UpdateUserStatRequest {
+    optional uint32_t StatId = 1;
+    optional uint32_t ValueType = 2;
+    optional uint32_t FloatValue = 3;
+    optional uint32_t IntValue = 4;
+}
+
