@@ -3,33 +3,33 @@ syntax = "proto2";
 package galaxy.protocols.overlay_for_peer
 
 message DisablePopups {
-    optional uint32_t DisabledPopups = 1;
+    optional uint32_t disabled_popups = 1;
 }
 
 message GameInviteSentNotification {
-    optional uint32_t ReceiverIds = 1;
-    optional uint32_t ConnectionString = 2;
+    optional uint32_t receiver_ids = 1;
+    optional uint32_t connection_string = 2;
 }
 
 message GameJoinRequestNotification {
-    optional uint32_t InviterId = 1;
-    optional uint32_t ConnectionString = 2;
-    optional uint32_t ClientId = 3;
+    optional uint32_t inviter_id = 1;
+    optional uint32_t connection_string = 2;
+    optional uint32_t client_id = 3;
 }
 
 message ShowInvitationDialog {
-    optional uint32_t ConnectionString = 1;
+    optional uint32_t connection_string = 1;
 }
 
 message ShowWebPage {
-    optional uint32_t Url = 1;
+    optional uint32_t url = 1;
 }
 
 message StateChangeNotification {
-    optional uint32_t Active = 1;
+    optional uint32_t active = 1;
 }
 
 message VisibilityChangeNotification {
-    optional uint32_t Visible = 1;
+    optional uint32_t visible = 1;
 }
 

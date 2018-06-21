@@ -3,16 +3,16 @@ syntax = "proto2";
 package gog.protocols.pb
 
 message Header {
-    optional uint32_t Sort = 1;
-    optional uint32_t Type = 2;
-    optional uint32_t Size = 3;
-    optional uint32_t Oseq = 4;
+    optional uint32_t sort = 1;
+    optional uint32_t type = 2;
+    optional uint32_t size = 3;
+    optional uint32_t oseq = 4;
 }
 
 message Response {
-    optional uint32_t Rseq = 100;
-    optional uint32_t Code = 101;
-    optional uint32_t Description = 102;
-    optional uint32_t RetryAfter = 103;
+    optional uint32_t rseq = 100;
+    optional uint32_t code = 101;
+    optional uint32_t description = 102;
+    optional uint32_t retry_after = 103;
 }
 

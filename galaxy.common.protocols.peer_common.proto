@@ -3,7 +3,7 @@ syntax = "proto2";
 package galaxy.common.protocols.peer_common
 
 message Property {
-    optional uint32_t Name = 1;
-    optional uint32_t Value = 2;
+    optional uint32_t name = 1;
+    optional uint32_t value = 2;
 }
 

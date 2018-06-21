@@ -3,27 +3,27 @@ syntax = "proto2";
 package galaxy.common.protocols.peer_to_peer
 
 message CustomPacket {
-    optional uint32_t Data = 1;
-    optional uint32_t Channel = 2;
-    optional uint32_t LobbyId = 3;
-    optional uint32_t Seq = 4;
+    optional uint32_t data = 1;
+    optional uint32_t channel = 2;
+    optional uint32_t lobby_id = 3;
+    optional uint32_t seq = 4;
 }
 
 message LobbyMemberPropertiesNotification {
-    optional uint32_t LobbyId = 1;
-    optional uint32_t Properties = 3;
+    optional uint32_t lobby_id = 1;
+    optional uint32_t properties = 3;
 }
 
 message LobbyMessage {
-    optional uint32_t LobbyId = 1;
-    optional uint32_t Data = 2;
+    optional uint32_t lobby_id = 1;
+    optional uint32_t data = 2;
 }
 
 message LobbyPropertiesNotification {
-    optional uint32_t LobbyId = 1;
-    optional uint32_t Properties = 2;
-    optional uint32_t MemberMaxCount = 3;
-    optional uint32_t LobbyType = 4;
-    optional uint32_t Joinable = 5;
+    optional uint32_t lobby_id = 1;
+    optional uint32_t properties = 2;
+    optional uint32_t member_max_count = 3;
+    optional uint32_t lobby_type = 4;
+    optional uint32_t joinable = 5;
 }
 
