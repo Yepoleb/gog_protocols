@@ -2,17 +2,39 @@ syntax = "proto2";
 
 package gog.protocols.pb
 
+/**
+ * Header used for all Galaxy messages.
+ */
 message Header {
-    optional uint32_t sort = 1;
-    optional uint32_t type = 2;
-    optional uint32_t size = 3;
-    optional uint32_t oseq = 4;
+    required uint32 sort = 1; // Subprotocol
+    required uint32 type = 2; // Message type
+    optional uint32 size = 3 [default = 0]; // Payload size
+    optional uint32 oseq = 4; // Sequence number
+    extensions 100 to max;
 }
 
+/**
+ * Header extensions for response messages. Not instanciated on its own, only
+ * provides extension IDs for the Header message.
+ */
 message Response {
-    optional uint32_t rseq = 100;
-    optional uint32_t code = 101;
-    optional uint32_t description = 102;
-    optional uint32_t retry_after = 103;
+    enum Status {
+        UNKNOWN_RESPONSE = 0;
+        OK = 200;
+        ACCEPTED = 202;
+        BAD_REQUEST = 400;
+        UNAUTHORIZED = 401;
+        FORBIDDEN = 403;
+        NOT_FOUND = 404;
+        CONFLICT = 409;
+        INTERNAL_ERROR = 500;
+        NOT_IMPLEMENTED = 501;
+        UNAVAILABLE = 503;
+    }
+    extend Header {
+        optional uint32 rseq = 100; // Sequence number of message responded to
+        optional Status code = 101 [default = OK]; // Status code
+        optional string description = 102; // Error description
+        optional uint32 retry_after = 103; // Time to retry after in seconds
+    }
 }
-

@@ -2,34 +2,49 @@ syntax = "proto2";
 
 package galaxy.protocols.overlay_for_peer
 
-message DisablePopups {
-    optional uint32_t disabled_popups = 1;
-}
+enum MessageSort {
+    MESSAGE_SORT = 6;
+};
 
-message GameInviteSentNotification {
-    optional uint32_t receiver_ids = 1;
-    optional uint32_t connection_string = 2;
-}
-
-message GameJoinRequestNotification {
-    optional uint32_t inviter_id = 1;
-    optional uint32_t connection_string = 2;
-    optional uint32_t client_id = 3;
-}
-
-message ShowInvitationDialog {
-    optional uint32_t connection_string = 1;
-}
-
-message ShowWebPage {
-    optional uint32_t url = 1;
+enum MessageType {
+    UNKNOWN_MESSAGE = 0;
+    STATE_CHANGE_NOTIFICATION = 1;
+    VISIBILITY_CHANGE_NOTIFICATION = 1;
+    SHOW_INVITATION_DIALOG = 2;
+    GAME_JOIN_REQUEST_NOTIFICATION = 3;
+    SHOW_WEB_PAGE = 4;
+    GAME_INVITE_SENT_NOTIFICATION = 5;
+    OVERLAY_INITIALIZED_NOTIFICATION = 6;
+    DISABLE_POPUPS = 6;
 }
 
 message StateChangeNotification {
-    optional uint32_t active = 1;
+    optional bool active = 1;
 }
 
 message VisibilityChangeNotification {
-    optional uint32_t visible = 1;
+    optional bool visible = 1;
 }
 
+message ShowInvitationDialog {
+    optional string connection_string = 1;
+}
+
+message GameJoinRequestNotification {
+    optional uint64 inviter_id = 1;
+    optional string connection_string = 2;
+    optional string client_id = 3;
+}
+
+message ShowWebPage {
+    optional string url = 1;
+}
+
+message GameInviteSentNotification {
+    repeated uint64 receiver_ids = 1;
+    optional string connection_string = 2;
+}
+
+message DisablePopups {
+    optional bool disabled_popups = 1;
+}

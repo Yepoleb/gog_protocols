@@ -2,273 +2,421 @@ syntax = "proto2";
 
 package galaxy.protocols.communication_service
 
-message AbortStorageSynchronizationRequest {
-    optional uint32_t client_id = 1;
+enum MessageSort {
+    MESSAGE_SORT = 1;
 }
 
-message AuthInfoRequest {
-    optional uint32_t client_id = 1;
-    optional uint32_t client_secret = 2;
-    optional uint32_t platform_type = 3;
-    optional uint32_t steam_ticket = 4;
-    optional uint32_t game_pid = 5;
+enum MessageType {
+    UNKNOWN_MESSAGE = 0;
+    LIBRARY_INFO_REQUEST = 1;
+    LIBRARY_INFO_RESPONSE = 2;
+    AUTH_INFO_REQUEST = 3;
+    AUTH_INFO_RESPONSE = 4;
+    GET_USER_STATS_REQUEST = 15;
+    GET_USER_STATS_RESPONSE = 16;
+    UPDATE_USER_STAT_REQUEST = 17;
+    UPDATE_USER_STAT_RESPONSE = 18;
+    DELETE_USER_STATS_REQUEST = 19;
+    DELETE_USER_STATS_RESPONSE = 20;
+    GET_GLOBAL_STATS_REQUEST = 21;
+    GET_GLOBAL_STATS_RESPONSE = 22;
+    GET_USER_ACHIEVEMENTS_REQUEST = 23;
+    GET_USER_ACHIEVEMENTS_RESPONSE = 24;
+    UNLOCK_USER_ACHIEVEMENT_REQUEST = 25;
+    UNLOCK_USER_ACHIEVEMENT_RESPONSE = 26;
+    CLEAR_USER_ACHIEVEMENT_REQUEST = 27;
+    CLEAR_USER_ACHIEVEMENT_RESPONSE = 28;
+    DELETE_USER_ACHIEVEMENTS_REQUEST = 29;
+    DELETE_USER_ACHIEVEMENTS_RESPONSE = 30;
+    GET_LEADERBOARDS_REQUEST = 31;
+    GET_LEADERBOARDS_RESPONSE = 32;
+    GET_LEADERBOARD_ENTRIES_GLOBAL_REQUEST = 33;
+    GET_LEADERBOARD_ENTRIES_AROUND_USER_REQUEST = 34;
+    GET_LEADERBOARD_ENTRIES_FOR_USERS_REQUEST = 35;
+    GET_LEADERBOARD_ENTRIES_RESPONSE = 36;
+    SET_LEADERBOARD_SCORE_REQUEST = 37;
+    SET_LEADERBOARD_SCORE_RESPONSE = 38;
+    AUTH_STATE_CHANGE_NOTIFICATION = 39;
+    GET_LEADERBOARDS_BY_KEY_REQUEST = 40;
+    CREATE_LEADERBOARD_REQUEST = 41;
+    CREATE_LEADERBOARD_RESPONSE = 42;
+    GET_USER_TIME_PLAYED_REQUEST = 43;
+    GET_USER_TIME_PLAYED_RESPONSE = 44;
+    SHARE_FILE_REQUEST = 47;
+    SHARE_FILE_RESPONSE = 48;
+    START_OVERLAY_SESSION_REQUEST = 49;
+    START_OVERLAY_SESSION_RESPONSE = 50;
+    START_GAME_SESSION_REQUEST = 49;
+    START_GAME_SESSION_RESPONSE = 50;
+    START_STORAGE_SYNCHRONIZATION_REQUEST = 51;
+    START_STORAGE_SYNCHRONIZATION_RESPONSE = 52;
+    STORAGE_SYNCHRONIZATION_PROGRESS_NOTIFICATION = 53;
+    STORAGE_SYNCHRONIZATION_SUCCESS_NOTIFICATION = 54;
+    STORAGE_SYNCHRONIZATION_FAILURE_NOTIFICATION = 55;
+    ABORT_STORAGE_SYNCHRONIZATION_REQUEST = 56;
+    ABORT_STORAGE_SYNCHRONIZATION_RESPONSE = 57;
+    OVERLAY_STATE_CHANGE_NOTIFICATION = 58;
+    CONFIGURE_ENVIRONMENT_REQUEST = 59;
+    CONFIGURE_ENVIRONMENT_RESPONSE = 60;
 }
 
-message AuthInfoResponse {
-    optional uint32_t refresh_token = 1;
-    optional uint32_t environment_type = 2;
-    optional uint32_t user_id = 3;
-    optional uint32_t user_name = 4;
-    optional uint32_t region = 5;
-}
+enum Bitness {
+    BITNESS_UNDEFINED = 0;
+    BITNESS_32_BIT = 1;
+    BITNESS_64_BIT = 2;
+};
 
-message AuthStateChangeNotification {
-    optional uint32_t refresh_token = 1;
-}
+enum CompilerType {
+    COMPILER_TYPE_UNDEFINED = 0;
+    COMPILER_TYPE_CLANG = 1;
+    COMPILER_TYPE_GCC = 2;
+    COMPILER_TYPE_MSVC = 3;
+};
 
-message ClearUserAchievementRequest {
-    optional uint32_t achievement_id = 1;
-}
+enum PlatformType {
+    PLATFORM_TYPE_UNDEFINED = 0;
+    PLATFORM_TYPE_GALAXY = 1;
+    PLATFORM_TYPE_STEAM = 2;
+};
 
-message ConfigureEnvironmentRequest {
-    optional uint32_t environment_type = 1;
-    optional uint32_t region = 2;
-}
+enum EnvironmentType {
+    ENVIRONMENT_PRODUCTION = 0;
+    ENVIRONMENT_TEST = 1;
+    ENVIRONMENT_PREPROD = 2;
+};
 
-message CreateLeaderboardRequest {
-    optional uint32_t key = 1;
-    optional uint32_t name = 2;
-    optional uint32_t sort_method = 3;
-    optional uint32_t display_type = 4;
-}
+enum Region {
+    REGION_WORLD_WIDE = 0;
+    REGION_CHINA = 1;
+};
 
-message CreateLeaderboardResponse {
-    optional uint32_t leaderboard_id = 1;
-}
+enum UpdateStatus {
+    UNKNOWN_UPDATE_STATUS = 0;
+    UPDATE_PENDING = 1;
+    UPDATE_FAILED = 2;
+    UPDATE_COMPLETE = 3;
+};
 
-message GetCachedUserAchievementsRequest {
-    optional uint32_t client_id = 1;
-}
+enum ValueType {
+    VALUE_TYPE_UNDEFINED = 0;
+    VALUE_TYPE_INT = 1;
+    VALUE_TYPE_FLOAT = 2;
+    VALUE_TYPE_AVGRATE = 3;
+};
 
-message GetGlobalStatsRequest {
-    optional uint32_t days = 1;
-}
+enum SortMethod {
+    SORT_METHOD_UNDEFINED = 0;
+    SORT_METHOD_ASCENDING = 1;
+    SORT_METHOD_DESCENDING = 2;
+};
 
-message GetGlobalStatsResponse {
-    optional uint32_t global_stats = 1;
-}
+enum DisplayType {
+    DISPLAY_TYPE_UNDEFINED = 0;
+    DISPLAY_TYPE_NUMERIC = 1;
+    DISPLAY_TYPE_TIME_SECONDS = 2;
+    DISPLAY_TYPE_TIME_MILLISECONDS = 3;
+};
 
-message GetGlobalStatsResponse_GlobalStat {
-    optional uint32_t stat_id = 1;
-    optional uint32_t key = 2;
-    optional uint32_t value_type = 3;
-    optional uint32_t float_value = 4;
-    optional uint32_t int_value = 5;
-    optional uint32_t window_size = 6;
-}
+enum SynchronizationPolicy {
+    SYNCHRONIZATION_POLICY_FAIL_ON_CONFLICT = 0;
+    SYNCHRONIZATION_POLICY_PREFER_LOCAL = 1;
+    SYNCHRONIZATION_POLICY_PREFER_REMOTE = 2;
+    SYNCHRONIZATION_POLICY_SKIP_CONFLICTS = 3;
+};
 
-message GetLeaderboardEntriesAroundUserRequest {
-    optional uint32_t leaderboard_id = 1;
-    optional uint32_t user_id = 2;
-    optional uint32_t count_before = 3;
-    optional uint32_t count_after = 4;
-}
+enum SynchronizationModifierFlag {
+    SYNCHRONIZATION_MODIFIER_DO_NOT_PULL = 1;
+    SYNCHRONIZATION_MODIFIER_DO_NOT_PUSH = 2;
+    SYNCHRONIZATION_MODIFIER_RESTORE_MISSING = 4;
+    SYNCHRONIZATION_MODIFIER_DO_NOT_USE_DATABASE = 8;
+    SYNCHRONIZATION_MODIFIER_VERIFY_LOCAL_DATA = 16;
+};
 
-message GetLeaderboardEntriesForUsersRequest {
-    optional uint32_t leaderboard_id = 1;
-    optional uint32_t user_ids = 2;
-}
 
-message GetLeaderboardEntriesGlobalRequest {
-    optional uint32_t leaderboard_id = 1;
-    optional uint32_t range_start = 2;
-    optional uint32_t range_end = 3;
-}
-
-message GetLeaderboardEntriesResponse {
-    optional uint32_t leaderboard_entries = 1;
-    optional uint32_t leaderboard_entry_total_count = 2;
-}
-
-message GetLeaderboardEntriesResponse_LeaderboardEntry {
-    optional uint32_t rank = 1;
-    optional uint32_t score = 2;
-    optional uint32_t user_id = 3;
-    optional uint32_t details = 4;
-}
-
-message GetLeaderboardsByKeyRequest {
-    optional uint32_t key = 1;
-}
-
-message GetLeaderboardsResponse {
-    optional uint32_t leaderboard_definitions = 1;
-}
-
-message GetLeaderboardsResponse_LeaderboardDefinition {
-    optional uint32_t leaderboard_id = 1;
-    optional uint32_t key = 2;
-    optional uint32_t name = 3;
-    optional uint32_t sort_method = 4;
-    optional uint32_t display_type = 5;
-}
-
-message GetUserAchievementsRequest {
-    optional uint32_t user_id = 1;
-}
-
-message GetUserAchievementsResponse {
-    optional uint32_t user_achievements = 1;
-    optional uint32_t language = 2;
-    optional uint32_t achievements_mode = 3;
-}
-
-message GetUserAchievementsResponse_UserAchievement {
-    optional uint32_t achievement_id = 1;
-    optional uint32_t key = 2;
-    optional uint32_t name = 3;
-    optional uint32_t description = 4;
-    optional uint32_t image_url_locked = 5;
-    optional uint32_t image_url_unlocked = 6;
-    optional uint32_t visible_while_locked = 7;
-    optional uint32_t unlock_time = 8;
-    optional uint32_t rarity = 9;
-    optional uint32_t rarity_level_description = 10;
-    optional uint32_t rarity_level_slug = 11;
-}
-
-message GetUserStatsRequest {
-    optional uint32_t user_id = 1;
-}
-
-message GetUserStatsResponse {
-    optional uint32_t user_stats = 1;
-}
-
-message GetUserStatsResponse_UserStat {
-    optional uint32_t stat_id = 1;
-    optional uint32_t key = 2;
-    optional uint32_t value_type = 3;
-    optional uint32_t float_value = 4;
-    optional uint32_t int_value = 5;
-    optional uint32_t window_size = 6;
-    optional uint32_t float_default_value = 7;
-    optional uint32_t int_default_value = 8;
-    optional uint32_t float_min_value = 9;
-    optional uint32_t int_min_value = 10;
-    optional uint32_t float_max_value = 11;
-    optional uint32_t int_max_value = 12;
-    optional uint32_t float_max_change = 13;
-    optional uint32_t int_max_change = 14;
-    optional uint32_t increment_only = 15;
-}
-
-message GetUserTimePlayedRequest {
-    optional uint32_t user_id = 1;
-}
-
-message GetUserTimePlayedResponse {
-    optional uint32_t time_played = 1;
-}
 
 message LibraryInfoRequest {
-    optional uint32_t bitness = 1;
-    optional uint32_t compiler_type = 2;
-    optional uint32_t compiler_version = 3;
+    optional Bitness bitness = 1;
+    optional CompilerType compiler_type = 2;
+    optional string compiler_version = 3;
 }
 
 message LibraryInfoResponse {
-    optional uint32_t location = 1;
-    optional uint32_t update_status = 2;
+    optional string location = 1;
+    optional UpdateStatus update_status = 2;
 }
 
-message OverlayStateChangeNotification {
-    optional uint32_t overlay_state = 1;
+message AuthInfoRequest {
+    optional string client_id = 1;
+    optional string client_secret = 2;
+    optional PlatformType platform_type = 3;
+    optional string steam_ticket = 4;
+    optional uint32 game_pid = 5;
 }
 
-message SetLeaderboardScoreRequest {
-    optional uint32_t leaderboard_id = 1;
-    optional uint32_t score = 2;
-    optional uint32_t force_update = 3;
-    optional uint32_t details = 4;
+message AuthInfoResponse {
+    optional string refresh_token = 1;
+    optional EnvironmentType environment_type = 2;
+    optional uint64 user_id = 3;
+    optional string user_name = 4;
+    optional Region region = 5;
 }
 
-message SetLeaderboardScoreResponse {
-    optional uint32_t score = 1;
-    optional uint32_t old_rank = 2;
-    optional uint32_t new_rank = 3;
-    optional uint32_t leaderboard_entry_total_count = 4;
+message GetUserStatsRequest {
+    optional fixed64 user_id = 1;
 }
 
-message ShareFileRequest {
-    optional uint32_t filename = 1;
-}
+message GetUserStatsResponse {
+    message UserStat {
+        optional fixed64 stat_id = 1;
+        optional string key = 2;
+        optional ValueType value_type = 3;
+        optional float float_value = 4;
+        optional int32 int_value = 5;
+        optional double window_size = 6;
+        optional float float_default_value = 7;
+        optional int32 int_default_value = 8;
+        optional float float_min_value = 9;
+        optional int32 int_min_value = 10;
+        optional float float_max_value = 11;
+        optional int32 int_max_value = 12;
+        optional float float_max_change = 13;
+        optional int32 int_max_change = 14;
+        optional bool increment_only = 15;
+    }
 
-message ShareFileResponse {
-    optional uint32_t file_handle = 1;
-}
-
-message StartGameSessionRequest {
-    optional uint32_t game_pid = 1;
-    optional uint32_t overlay_support = 2;
-}
-
-message StartOverlaySessionRequest {
-    optional uint32_t game_pid = 1;
-}
-
-message StartStorageSynchronizationRequest {
-    optional uint32_t locations = 1;
-    optional uint32_t client_id = 2;
-    optional uint32_t client_secret = 3;
-    optional uint32_t installation_id = 4;
-    optional uint32_t synchronization_policy = 5;
-    optional uint32_t synchronization_modifier_flags = 6;
-}
-
-message StartStorageSynchronizationRequest_StorageLocation {
-    optional uint32_t name = 1;
-    optional uint32_t path = 2;
-}
-
-message StorageSynchronizationFailureNotification {
-    optional uint32_t client_id = 2;
-    optional uint32_t failure_reason = 3;
-    optional uint32_t conflict_details = 4;
-    optional uint32_t quota_exceeded_details = 5;
-}
-
-message StorageSynchronizationFailureNotification_ConflictDetails {
-    optional uint32_t local_storage_last_modified_time = 1;
-    optional uint32_t remote_storage_last_modified_time = 2;
-}
-
-message StorageSynchronizationFailureNotification_QuotaExceededDetails {
-    optional uint32_t quota_bytes = 1;
-    optional uint32_t quota_used_bytes = 2;
-    optional uint32_t required_bytes = 3;
-    optional uint32_t required_uploads = 4;
-}
-
-message StorageSynchronizationProgressNotification {
-    optional uint32_t progress_fraction_numerator = 1;
-    optional uint32_t progress_fraction_denominator = 2;
-    optional uint32_t client_id = 3;
-}
-
-message StorageSynchronizationSuccessNotification {
-    optional uint32_t client_id = 2;
-}
-
-message UnlockUserAchievementRequest {
-    optional uint32_t achievement_id = 1;
-    optional uint32_t time = 2;
+    repeated UserStat user_stats = 1;
 }
 
 message UpdateUserStatRequest {
-    optional uint32_t stat_id = 1;
-    optional uint32_t value_type = 2;
-    optional uint32_t float_value = 3;
-    optional uint32_t int_value = 4;
+    optional fixed64 stat_id = 1;
+    optional ValueType value_type = 2;
+    optional float float_value = 3;
+    optional int32 int_value = 4;
 }
 
+message GetGlobalStatsRequest {
+    optional uint32 days = 1;
+}
+
+message GetGlobalStatsResponse {
+    message GlobalStat {
+        optional fixed64 stat_id = 1;
+        optional string key = 2;
+        optional ValueType value_type = 3;
+        optional float float_value = 4;
+        optional int64 int_value = 5;
+        optional double window_size = 6;
+    }
+
+    repeated GlobalStat global_stats = 1;
+}
+
+message GetUserAchievementsRequest {
+    optional fixed64 user_id = 1;
+}
+
+message GetUserAchievementsResponse {
+    message UserAchievement {
+        optional fixed64 achievement_id = 1;
+        optional string key = 2;
+        optional string name = 3;
+        optional string description = 4;
+        optional string image_url_locked = 5;
+        optional string image_url_unlocked = 6;
+        optional bool visible_while_locked = 7;
+        optional fixed32 unlock_time = 8;
+        optional float rarity = 9;
+        optional string rarity_level_description = 10;
+        optional string rarity_level_slug = 11;
+    }
+
+    repeated UserAchievement user_achievements = 1;
+    optional string language = 2;
+    optional string achievements_mode = 3;
+}
+
+message UnlockUserAchievementRequest {
+    optional fixed64 achievement_id = 1;
+    optional fixed32 time = 2;
+}
+
+message ClearUserAchievementRequest {
+    optional fixed64 achievement_id = 1;
+}
+
+message GetLeaderboardsResponse {
+    message LeaderboardDefinition {
+        optional fixed64 leaderboard_id = 1;
+        optional string key = 2;
+        optional string name = 3;
+        optional SortMethod sort_method = 4;
+        optional DisplayType display_type = 5;
+    }
+
+    repeated uint32 leaderboard_definitions = 1;
+}
+
+message GetLeaderboardEntriesGlobalRequest {
+    optional fixed64 leaderboard_id = 1;
+    optional uint32 range_start = 2;
+    optional uint32 range_end = 3;
+}
+
+message GetLeaderboardEntriesAroundUserRequest {
+    optional fixed64 leaderboard_id = 1;
+    optional uint64 user_id = 2;
+    optional uint32 count_before = 3;
+    optional uint32 count_after = 4;
+}
+
+message GetLeaderboardEntriesForUsersRequest {
+    optional fixed64 leaderboard_id = 1;
+    repeated uint64 user_ids = 2;
+}
+
+message GetLeaderboardEntriesResponse {
+    message LeaderboardEntry {
+        optional uint32 rank = 1;
+        optional int32 score = 2;
+        optional uint64 user_id = 3;
+        optional string details = 4;
+    }
+
+    optional LeaderboardEntry leaderboard_entries = 1;
+    optional uint32 leaderboard_entry_total_count = 2;
+}
+
+message SetLeaderboardScoreRequest {
+    optional uint64 leaderboard_id = 1;
+    optional int32 score = 2;
+    optional bool force_update = 3;
+    optional string details = 4;
+}
+
+message SetLeaderboardScoreResponse {
+    optional int32 score = 1;
+    optional uint32 old_rank = 2;
+    optional uint32 new_rank = 3;
+    optional uint32 leaderboard_entry_total_count = 4;
+}
+
+message AuthStateChangeNotification {
+    optional string refresh_token = 1;
+}
+
+message GetLeaderboardsByKeyRequest {
+    repeated string key = 1;
+}
+
+message CreateLeaderboardRequest {
+    optional string key = 1;
+    optional string name = 2;
+    optional SortMethod sort_method = 3;
+    optional DisplayType display_type = 4;
+}
+
+message CreateLeaderboardResponse {
+    optional fixed64 leaderboard_id = 1;
+}
+
+message GetUserTimePlayedRequest {
+    optional uint64 user_id = 1;
+}
+
+message GetUserTimePlayedResponse {
+    optional uint32 time_played = 1;
+}
+
+message ShareFileRequest {
+    optional string filename = 1;
+}
+
+message ShareFileResponse {
+    optional uint64 file_handle = 1;
+}
+
+message StartOverlaySessionRequest {
+    optional uint32 game_pid = 1;
+}
+
+message StartGameSessionRequest {
+    enum OverlaySupport {
+        OVERLAY_SUPPORT_NOT_AVAILABLE = 0;
+        OVERLAY_SUPPORT_DISABLED = 1;
+        OVERLAY_SUPPORT_ENABLED = 2;
+    }
+
+    optional uint32 game_pid = 1;
+    optional OverlaySupport overlay_support = 2;
+}
+
+message StartStorageSynchronizationRequest {
+    message StorageLocation {
+        optional string name = 1;
+        optional string path = 2;
+    }
+
+    repeated StorageLocation locations = 1;
+    optional string client_id = 2;
+    optional string client_secret = 3;
+    optional uint32 installation_id = 4;
+    optional SynchronizationPolicy synchronization_policy = 5;
+    optional SynchronizationModifierFlag synchronization_modifier_flags = 6;
+}
+
+message StorageSynchronizationProgressNotification {
+    optional uint32 progress_fraction_numerator = 1;
+    optional uint32 progress_fraction_denominator = 2;
+    optional string client_id = 3;
+}
+
+message StorageSynchronizationSuccessNotification {
+    optional string client_id = 2;
+}
+
+message StorageSynchronizationFailureNotification {
+    enum FailureReason {
+        FAILURE_REASON_UNDEFINED = 0;
+        FAILURE_REASON_CONFLICT = 1;
+        FAILURE_REASON_ABORTED = 2;
+        FAILURE_REASON_QUOTA_EXCEEDED = 3;
+        FAILURE_REASON_NO_DISC_SPACE = 4;
+    }
+
+    message ConflictDetails {
+        optional uint32 local_storage_last_modified_time = 1;
+        optional uint32 remote_storage_last_modified_time = 2;
+    }
+
+    message QuotaExceededDetails {
+        optional uint32 quota_bytes = 1;
+        optional uint32 quota_used_bytes = 2;
+        optional uint32 required_bytes = 3;
+        optional uint32 required_uploads = 4;
+    }
+
+    optional string client_id = 2;
+    optional FailureReason failure_reason = 3;
+    optional ConflictDetails conflict_details = 4;
+    optional QuotaExceededDetails quota_exceeded_details = 5;
+}
+
+message AbortStorageSynchronizationRequest {
+    optional string client_id = 1;
+}
+
+message OverlayStateChangeNotification {
+    enum OverlayState {
+        OVERLAY_STATE_NOT_SUPPORTED = 0;
+        OVERLAY_STATE_DISABLED = 1;
+        OVERLAY_STATE_FAILED_TO_INITIALIZE = 2;
+        OVERLAY_STATE_INITIALIZED = 3;
+    }
+
+    optional OverlayState overlay_state = 1;
+}
+
+message ConfigureEnvironmentRequest {
+    optional EnvironmentType environment_type = 1;
+    optional Region region = 2;
+}

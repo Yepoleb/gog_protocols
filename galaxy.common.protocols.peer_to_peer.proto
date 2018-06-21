@@ -2,28 +2,35 @@ syntax = "proto2";
 
 package galaxy.common.protocols.peer_to_peer
 
+enum LobbyType {
+        LOBBY_TYPE_PRIVATE = 0;
+        LOBBY_TYPE_FRIENDS_ONLY = 1;
+        LOBBY_TYPE_PUBLIC = 2;
+        LOBBY_TYPE_INVISIBLE_TO_FRIENDS = 3;
+};
+
 message CustomPacket {
-    optional uint32_t data = 1;
-    optional uint32_t channel = 2;
-    optional uint32_t lobby_id = 3;
-    optional uint32_t seq = 4;
+    optional string data = 1;
+    optional uint32 channel = 2;
+    optional uint64 lobby_id = 3;
+    optional uint64 seq = 4;
 }
 
 message LobbyMemberPropertiesNotification {
-    optional uint32_t lobby_id = 1;
-    optional uint32_t properties = 3;
+    optional uint64 lobby_id = 1;
+    repeated galaxy.common.protocols.peer_common.Property properties = 3;
 }
 
 message LobbyMessage {
-    optional uint32_t lobby_id = 1;
-    optional uint32_t data = 2;
+    optional uint64 lobby_id = 1;
+    optional string data = 2;
 }
 
 message LobbyPropertiesNotification {
-    optional uint32_t lobby_id = 1;
-    optional uint32_t properties = 2;
-    optional uint32_t member_max_count = 3;
-    optional uint32_t lobby_type = 4;
-    optional uint32_t joinable = 5;
+    optional uint64 lobby_id = 1;
+    repeated galaxy.common.protocols.peer_common.Property properties = 2;
+    optional uint32 member_max_count = 3;
+    optional LobbyType lobby_type = 4;
+    optional bool joinable = 5;
 }
 

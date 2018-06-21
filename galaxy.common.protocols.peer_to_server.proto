@@ -3,142 +3,142 @@ syntax = "proto2";
 package galaxy.common.protocols.peer_to_server
 
 message CreateLobbyRequest {
-    optional uint32_t lobby_id = 1;
-    optional uint32_t nat_type = 2;
-    optional uint32_t topology_type = 3;
-    optional uint32_t metadata = 4;
-    optional uint32_t peer_type = 5;
+    optional uint32 lobby_id = 1;
+    optional uint32 nat_type = 2;
+    optional uint32 topology_type = 3;
+    optional uint32 metadata = 4;
+    optional uint32 peer_type = 5;
 }
 
 message CreateLobbyResponse {
-    optional uint32_t lobby_id = 1;
-    optional uint32_t success = 2;
+    optional uint32 lobby_id = 1;
+    optional uint32 success = 2;
 }
 
 message CustomProxyingPacket {
-    optional uint32_t channel = 1;
-    optional uint32_t lobby_id = 2;
-    optional uint32_t receiver_id = 3;
-    optional uint32_t sender_id = 4;
-    optional uint32_t seq = 5;
-    optional uint32_t data = 6;
+    optional uint32 channel = 1;
+    optional uint32 lobby_id = 2;
+    optional uint32 receiver_id = 3;
+    optional uint32 sender_id = 4;
+    optional uint32 seq = 5;
+    optional uint32 data = 6;
 }
 
 message GalaxyLobbyMemberInfo {
-    optional uint32_t member_id = 1;
-    optional uint32_t user_id = 2;
-    optional uint32_t nat_type = 3;
-    optional uint32_t public_key = 4;
-    optional uint32_t address = 5;
-    optional uint32_t direct_connections_allowed = 6;
+    optional uint32 member_id = 1;
+    optional uint32 user_id = 2;
+    optional uint32 nat_type = 3;
+    optional uint32 public_key = 4;
+    optional uint32 address = 5;
+    optional uint32 direct_connections_allowed = 6;
 }
 
 message JoinLobbyRequest {
-    optional uint32_t lobby_id = 1;
-    optional uint32_t nat_type = 2;
-    optional uint32_t peer_type = 3;
+    optional uint32 lobby_id = 1;
+    optional uint32 nat_type = 2;
+    optional uint32 peer_type = 3;
 }
 
 message JoinLobbyResponse {
-    optional uint32_t lobby_id = 1;
-    optional uint32_t success = 2;
-    optional uint32_t galaxy_member_infos = 3;
-    optional uint32_t joining_galaxy_member_infos = 4;
-    optional uint32_t topology_type = 5;
-    optional uint32_t owner_id = 6;
+    optional uint32 lobby_id = 1;
+    optional uint32 success = 2;
+    optional uint32 galaxy_member_infos = 3;
+    optional uint32 joining_galaxy_member_infos = 4;
+    optional uint32 topology_type = 5;
+    optional uint32 owner_id = 6;
 }
 
 message LeaveLobbyNotification {
-    optional uint32_t lobby_id = 1;
+    optional uint32 lobby_id = 1;
 }
 
 message LobbyEnteredNotification {
-    optional uint32_t lobby_id = 1;
-    optional uint32_t owner_id = 2;
-    optional uint32_t metadata = 3;
-    optional uint32_t properties = 4;
-    optional uint32_t members = 5;
-}
+    message MemberProperties {
+        optional uint32 member_id = 1;
+        optional uint32 properties = 2;
+    }
 
-message LobbyEnteredNotification_MemberProperties {
-    optional uint32_t member_id = 1;
-    optional uint32_t properties = 2;
+    optional uint32 lobby_id = 1;
+    optional uint32 owner_id = 2;
+    optional uint32 metadata = 3;
+    optional MemberProperties properties = 4;
+    optional uint32 members = 5;
 }
 
 message LobbyLeftNotification {
-    optional uint32_t lobby_id = 1;
-    optional uint32_t leave_reason = 2;
+    optional uint32 lobby_id = 1;
+    optional uint32 leave_reason = 2;
 }
 
 message LobbyMemberPropertiesNotification {
-    optional uint32_t lobby_id = 1;
-    optional uint32_t member_id = 2;
-    optional uint32_t properties = 3;
+    optional uint32 lobby_id = 1;
+    optional uint32 member_id = 2;
+    optional uint32 properties = 3;
 }
 
 message LobbyMessage {
-    optional uint32_t lobby_id = 1;
-    optional uint32_t member_id = 2;
-    optional uint32_t data = 3;
+    optional uint32 lobby_id = 1;
+    optional uint32 member_id = 2;
+    optional uint32 data = 3;
 }
 
 message LobbyMetadata {
-    optional uint32_t member_max_count = 1;
-    optional uint32_t lobby_type = 2;
-    optional uint32_t joinable = 3;
+    optional uint32 member_max_count = 1;
+    optional uint32 lobby_type = 2;
+    optional uint32 joinable = 3;
 }
 
 message LobbyPingStatistics {
-    optional uint32_t lobby_id = 1;
-    optional uint32_t pings_to_member = 2;
-}
+    message PingsToMember {
+        optional uint32 member_id = 1;
+        optional uint32 ping = 2;
+    }
 
-message LobbyPingStatistics_PingsToMember {
-    optional uint32_t member_id = 1;
-    optional uint32_t ping = 2;
+    optional uint32 lobby_id = 1;
+    optional PingsToMember pings_to_member = 2;
 }
 
 message LobbyPropertiesNotification {
-    optional uint32_t lobby_id = 1;
-    optional uint32_t metadata = 2;
-    optional uint32_t properties = 3;
+    optional uint32 lobby_id = 1;
+    optional uint32 metadata = 2;
+    optional uint32 properties = 3;
 }
 
 message MemberInfo {
-    optional uint32_t sdk_version = 1;
-    optional uint32_t client_id = 2;
+    optional uint32 sdk_version = 1;
+    optional uint32 client_id = 2;
 }
 
 message MemberJoinedNotification {
-    optional uint32_t lobby_id = 1;
-    optional uint32_t galaxy_member_info = 2;
+    optional uint32 lobby_id = 1;
+    optional uint32 galaxy_member_info = 2;
 }
 
 message MemberLeftNotification {
-    optional uint32_t lobby_id = 1;
-    optional uint32_t member_id = 2;
-    optional uint32_t leave_reason = 3;
+    optional uint32 lobby_id = 1;
+    optional uint32 member_id = 2;
+    optional uint32 leave_reason = 3;
 }
 
 message NetworkAddress {
-    optional uint32_t host = 1;
-    optional uint32_t port = 2;
+    optional uint32 host = 1;
+    optional uint32 port = 2;
 }
 
 message NewLobbyOwnerNotification {
-    optional uint32_t lobby_id = 1;
-    optional uint32_t new_owner_id = 2;
+    optional uint32 lobby_id = 1;
+    optional uint32 new_owner_id = 2;
 }
 
 message NewLobbyOwnerVote {
-    optional uint32_t lobby_id = 1;
-    optional uint32_t member_id = 2;
+    optional uint32 lobby_id = 1;
+    optional uint32 member_id = 2;
 }
 
 message PeerConnectionStateChangeReport {
-    optional uint32_t lobby_id = 1;
-    optional uint32_t member_id = 2;
-    optional uint32_t state_change = 3;
-    optional uint32_t public_key = 4;
+    optional uint32 lobby_id = 1;
+    optional uint32 member_id = 2;
+    optional uint32 state_change = 3;
+    optional uint32 public_key = 4;
 }
 

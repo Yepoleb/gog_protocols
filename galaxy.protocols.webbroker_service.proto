@@ -2,21 +2,33 @@ syntax = "proto2";
 
 package galaxy.protocols.webbroker_service
 
-message AuthRequest {
-    optional uint32_t auth_token = 1;
+enum MessageSort {
+    MESSAGE_SORT = 2;
 }
 
-message MessageFromTopic {
-    optional uint32_t topic = 1;
-    optional uint32_t content = 2;
-    optional uint32_t id = 3;
+enum MessageType {
+    UNKNOWN_MESSAGE = 0;
+    AUTH_REQUEST = 1;
+    AUTH_RESPONSE = 2;
+    SUBSCRIBE_TOPIC_REQUEST = 3;
+    SUBSCRIBE_TOPIC_RESPONSE = 4;
+    MESSAGE_FROM_TOPIC = 5;
+};
+
+message AuthRequest {
+    optional string auth_token = 1;
 }
 
 message SubscribeTopicRequest {
-    optional uint32_t topic = 1;
+    optional string topic = 1;
 }
 
 message SubscribeTopicResponse {
-    optional uint32_t topic = 1;
+    optional string topic = 1;
 }
 
+message MessageFromTopic {
+    optional string topic = 1;
+    optional string content = 2;
+    optional uint64 id = 3;
+}
