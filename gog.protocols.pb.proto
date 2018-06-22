@@ -1,6 +1,6 @@
 syntax = "proto2";
 
-package gog.protocols.pb
+package gog.protocols.pb;
 
 /**
  * Header used for all Galaxy messages.

@@ -1,85 +1,59 @@
 syntax = "proto2";
 
-package galaxy.common.protocols.peer_to_server
+package galaxy.common.protocols.peer_to_server;
 
-message CreateLobbyRequest {
-    optional uint32 lobby_id = 1;
-    optional uint32 nat_type = 2;
-    optional uint32 topology_type = 3;
-    optional uint32 metadata = 4;
-    optional uint32 peer_type = 5;
+import "galaxy.common.protocols.peer_common.proto";
+
+enum MessageType {
+    UNKNOWN_MESSAGE = 0;
+    CREATE_LOBBY_REQUEST = 1;
+    CREATE_LOBBY_RESPONSE = 2;
+    JOIN_LOBBY_REQUEST = 3;
+    JOIN_LOBBY_RESPONSE = 4;
+    LOBBY_ENTERED_NOTIFICATION = 5;
+    MEMBER_JOINED_NOTIFICATION = 6;
+    MEMBER_LEFT_NOTIFICATION = 7;
+    NEW_LOBBY_OWNER_VOTE = 8;
+    NEW_LOBBY_OWNER_NOTIFICATION = 9;
+    PEER_CONNECTION_STATE_REPORT = 10;
+    LEAVE_LOBBY_NOTIFICATION = 11;
+    LOBBY_LEFT_NOTIFICATION = 12;
+    LOBBY_PROPERTIES_NOTIFICATION = 13;
+    LOBBY_MEMBER_PROPERTIES_NOTIFICATION = 14;
+    LOBBY_MESSAGE = 15;
+    MEMBER_INFO = 16;
+    CUSTOM_PROXYING_PACKET = 17;
 }
 
-message CreateLobbyResponse {
-    optional uint32 lobby_id = 1;
-    optional uint32 success = 2;
+enum LobbyTopologyType {
+    DEPRECATED_LOBBY_TOPOLOGY_TYPE_FCM_HOST_MIGRATION = 0;
+    LOBBY_TOPOLOGY_TYPE_FCM = 1;
+    LOBBY_TOPOLOGY_TYPE_STAR = 2;
+    LOBBY_TOPOLOGY_TYPE_CONNECTIONLESS = 3;
+    LOBBY_TOPOLOGY_TYPE_FCM_OWNERSHIP_TRANSITION = 4;
+    LOBBY_TOPOLOGY_TYPE_CONNECTIONLESS_P2P_PROXYING = 5;
+    LOBBY_TOPOLOGY_TYPE_CONNECTIONLESS_P2P_PROXYING_OWNERSHIP_TRANSITION = 6;
 }
 
-message CustomProxyingPacket {
-    optional uint32 channel = 1;
-    optional uint32 lobby_id = 2;
-    optional uint32 receiver_id = 3;
-    optional uint32 sender_id = 4;
-    optional uint32 seq = 5;
-    optional uint32 data = 6;
+enum LobbyLeaveReason {
+    LOBBY_LEAVE_REASON_UNSPECIFIED = 0;
+    LOBBY_LEAVE_REASON_LOBBY_CLOSED = 1;
+    LOBBY_LEAVE_REASON_MEMBER_QUITTED = 2;
+    LOBBY_LEAVE_REASON_CONNECTIVITY_ISSUES = 3;
 }
 
-message GalaxyLobbyMemberInfo {
-    optional uint32 member_id = 1;
-    optional uint32 user_id = 2;
-    optional uint32 nat_type = 3;
-    optional uint32 public_key = 4;
-    optional uint32 address = 5;
-    optional uint32 direct_connections_allowed = 6;
+enum PeerType {
+    PEER_TYPE_DESKTOP = 0;
+    PEER_TYPE_PS4 = 1;
+    PEER_TYPE_XBOX = 2;
+    PEER_TYPE_UWP = 3;
+    PEER_TYPE_IOS = 4;
 }
 
-message JoinLobbyRequest {
-    optional uint32 lobby_id = 1;
-    optional uint32 nat_type = 2;
-    optional uint32 peer_type = 3;
-}
-
-message JoinLobbyResponse {
-    optional uint32 lobby_id = 1;
-    optional uint32 success = 2;
-    optional uint32 galaxy_member_infos = 3;
-    optional uint32 joining_galaxy_member_infos = 4;
-    optional uint32 topology_type = 5;
-    optional uint32 owner_id = 6;
-}
-
-message LeaveLobbyNotification {
-    optional uint32 lobby_id = 1;
-}
-
-message LobbyEnteredNotification {
-    message MemberProperties {
-        optional uint32 member_id = 1;
-        optional uint32 properties = 2;
-    }
-
-    optional uint32 lobby_id = 1;
-    optional uint32 owner_id = 2;
-    optional uint32 metadata = 3;
-    optional MemberProperties properties = 4;
-    optional uint32 members = 5;
-}
-
-message LobbyLeftNotification {
-    optional uint32 lobby_id = 1;
-    optional uint32 leave_reason = 2;
-}
-
-message LobbyMemberPropertiesNotification {
-    optional uint32 lobby_id = 1;
-    optional uint32 member_id = 2;
-    optional uint32 properties = 3;
-}
-
-message LobbyMessage {
-    optional uint32 lobby_id = 1;
-    optional uint32 member_id = 2;
-    optional uint32 data = 3;
+enum ConnectionStateChange {
+    CONNECTION_STATE_ESTABLISHED = 0;
+    CONNECTION_STATE_CLOSED = 1;
+    CONNECTION_STATE_LOST = 2;
 }
 
 message LobbyMetadata {
@@ -88,57 +62,136 @@ message LobbyMetadata {
     optional uint32 joinable = 3;
 }
 
-message LobbyPingStatistics {
-    message PingsToMember {
-        optional uint32 member_id = 1;
-        optional uint32 ping = 2;
-    }
-
-    optional uint32 lobby_id = 1;
-    optional PingsToMember pings_to_member = 2;
-}
-
-message LobbyPropertiesNotification {
-    optional uint32 lobby_id = 1;
-    optional uint32 metadata = 2;
-    optional uint32 properties = 3;
-}
-
-message MemberInfo {
-    optional uint32 sdk_version = 1;
-    optional uint32 client_id = 2;
-}
-
-message MemberJoinedNotification {
-    optional uint32 lobby_id = 1;
-    optional uint32 galaxy_member_info = 2;
-}
-
-message MemberLeftNotification {
-    optional uint32 lobby_id = 1;
-    optional uint32 member_id = 2;
-    optional uint32 leave_reason = 3;
-}
-
 message NetworkAddress {
-    optional uint32 host = 1;
+    optional string host = 1;
     optional uint32 port = 2;
 }
 
-message NewLobbyOwnerNotification {
-    optional uint32 lobby_id = 1;
-    optional uint32 new_owner_id = 2;
+message GalaxyLobbyMemberInfo {
+    optional uint64 member_id = 1;
+    optional uint64 user_id = 2;
+    optional uint32 nat_type = 3;
+    optional string public_key = 4;
+    optional NetworkAddress address = 5;
+    optional bool direct_connections_allowed = 6;
+}
+
+message CreateLobbyRequest {
+    optional uint64 lobby_id = 1;
+    optional uint32 nat_type = 2;
+    optional LobbyTopologyType topology_type = 3;
+    optional LobbyMetadata metadata = 4;
+    optional PeerType peer_type = 5;
+}
+
+message CreateLobbyResponse {
+    optional uint64 lobby_id = 1;
+    optional bool success = 2;
+}
+
+message JoinLobbyRequest {
+    optional uint64 lobby_id = 1;
+    optional uint32 nat_type = 2;
+    optional PeerType peer_type = 3;
+}
+
+message JoinLobbyResponse {
+    optional uint64 lobby_id = 1;
+    optional bool success = 2;
+    repeated GalaxyLobbyMemberInfo galaxy_member_infos = 3;
+    repeated GalaxyLobbyMemberInfo joining_galaxy_member_infos = 4;
+    optional LobbyTopologyType topology_type = 5;
+    optional uint64 owner_id = 6;
+}
+
+message LobbyEnteredNotification {
+    message MemberProperties {
+        optional uint64 member_id = 1;
+        optional MemberProperties properties = 2;
+    }
+
+    optional uint64 lobby_id = 1;
+    optional uint64 owner_id = 2;
+    optional LobbyMetadata metadata = 3;
+    repeated galaxy.common.protocols.peer_common.Property properties = 4;
+    repeated MemberProperties members = 5;
+}
+
+message MemberJoinedNotification {
+    optional uint64 lobby_id = 1;
+    optional GalaxyLobbyMemberInfo galaxy_member_info = 2;
+}
+
+message MemberLeftNotification {
+    optional uint64 lobby_id = 1;
+    optional uint64 member_id = 2;
+    optional LobbyLeaveReason leave_reason = 3;
 }
 
 message NewLobbyOwnerVote {
-    optional uint32 lobby_id = 1;
-    optional uint32 member_id = 2;
+    optional uint64 lobby_id = 1;
+    optional uint64 member_id = 2;
+}
+
+message NewLobbyOwnerNotification {
+    optional uint64 lobby_id = 1;
+    optional uint64 new_owner_id = 2;
 }
 
 message PeerConnectionStateChangeReport {
-    optional uint32 lobby_id = 1;
-    optional uint32 member_id = 2;
-    optional uint32 state_change = 3;
-    optional uint32 public_key = 4;
+    optional uint64 lobby_id = 1;
+    optional uint64 member_id = 2;
+    optional ConnectionStateChange state_change = 3;
+    optional string public_key = 4;
 }
 
+message LeaveLobbyNotification {
+    optional uint64 lobby_id = 1;
+}
+
+message LobbyLeftNotification {
+    optional uint64 lobby_id = 1;
+    optional LobbyLeaveReason leave_reason = 2;
+}
+
+message LobbyPropertiesNotification {
+    optional uint64 lobby_id = 1;
+    optional LobbyMetadata metadata = 2;
+    repeated galaxy.common.protocols.peer_common.Property properties = 3;
+}
+
+message LobbyMemberPropertiesNotification {
+    optional uint64 lobby_id = 1;
+    optional uint64 member_id = 2;
+    repeated galaxy.common.protocols.peer_common.Property properties = 3;
+}
+
+message LobbyMessage {
+    optional uint64 lobby_id = 1;
+    optional uint64 member_id = 2;
+    optional string data = 3;
+}
+
+message MemberInfo {
+    optional string sdk_version = 1;
+    optional string client_id = 2;
+}
+
+message CustomProxyingPacket {
+    optional uint32 channel = 1;
+    optional uint64 lobby_id = 2;
+    optional uint64 receiver_id = 3;
+    optional uint64 sender_id = 4;
+    optional uint32 seq = 5;
+    optional string data = 6;
+}
+
+message LobbyPingStatistics {
+    message PingsToMember {
+        optional uint64 member_id = 1;
+        optional uint32 ping = 2;
+    }
+
+    optional uint64 lobby_id = 1;
+    optional PingsToMember pings_to_member = 2;
+}

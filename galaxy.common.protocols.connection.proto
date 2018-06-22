@@ -1,6 +1,6 @@
 syntax = "proto2";
 
-package galaxy.common.protocols.connection
+package galaxy.common.protocols.connection;
 
 enum MessageType {
     UNKNOWN_MESSAGE = 0;

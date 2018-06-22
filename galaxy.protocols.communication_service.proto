@@ -1,12 +1,14 @@
 syntax = "proto2";
 
-package galaxy.protocols.communication_service
+package galaxy.protocols.communication_service;
 
 enum MessageSort {
     MESSAGE_SORT = 1;
 }
 
 enum MessageType {
+    option allow_alias = true;
+
     UNKNOWN_MESSAGE = 0;
     LIBRARY_INFO_REQUEST = 1;
     LIBRARY_INFO_RESPONSE = 2;

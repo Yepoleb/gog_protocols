@@ -1,30 +1,23 @@
 syntax = "proto2";
 
-package galaxy.common.protocols.peer_to_peer
+package galaxy.common.protocols.peer_to_peer;
+
+import "galaxy.common.protocols.peer_common.proto";
+
+enum MessageType {
+    UNKNOWN_MESSAGE = 0;
+    LOBBY_PROPERTIES_NOTIFICATION = 1;
+    LOBBY_MEMBER_PROPERTIES_NOTIFICATION = 2;
+    CUSTOM_PACKET = 3;
+    LOBBY_MESSAGE = 4;
+}
 
 enum LobbyType {
-        LOBBY_TYPE_PRIVATE = 0;
-        LOBBY_TYPE_FRIENDS_ONLY = 1;
-        LOBBY_TYPE_PUBLIC = 2;
-        LOBBY_TYPE_INVISIBLE_TO_FRIENDS = 3;
+    LOBBY_TYPE_PRIVATE = 0;
+    LOBBY_TYPE_FRIENDS_ONLY = 1;
+    LOBBY_TYPE_PUBLIC = 2;
+    LOBBY_TYPE_INVISIBLE_TO_FRIENDS = 3;
 };
-
-message CustomPacket {
-    optional string data = 1;
-    optional uint32 channel = 2;
-    optional uint64 lobby_id = 3;
-    optional uint64 seq = 4;
-}
-
-message LobbyMemberPropertiesNotification {
-    optional uint64 lobby_id = 1;
-    repeated galaxy.common.protocols.peer_common.Property properties = 3;
-}
-
-message LobbyMessage {
-    optional uint64 lobby_id = 1;
-    optional string data = 2;
-}
 
 message LobbyPropertiesNotification {
     optional uint64 lobby_id = 1;
@@ -34,3 +27,19 @@ message LobbyPropertiesNotification {
     optional bool joinable = 5;
 }
 
+message LobbyMemberPropertiesNotification {
+    optional uint64 lobby_id = 1;
+    repeated galaxy.common.protocols.peer_common.Property properties = 3;
+}
+
+message CustomPacket {
+    optional string data = 1;
+    optional uint32 channel = 2;
+    optional uint64 lobby_id = 3;
+    optional uint64 seq = 4;
+}
+
+message LobbyMessage {
+    optional uint64 lobby_id = 1;
+    optional string data = 2;
+}

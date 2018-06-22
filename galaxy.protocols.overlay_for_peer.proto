@@ -1,12 +1,14 @@
 syntax = "proto2";
 
-package galaxy.protocols.overlay_for_peer
+package galaxy.protocols.overlay_for_peer;
 
 enum MessageSort {
     MESSAGE_SORT = 6;
 };
 
 enum MessageType {
+    option allow_alias = true;
+
     UNKNOWN_MESSAGE = 0;
     STATE_CHANGE_NOTIFICATION = 1;
     VISIBILITY_CHANGE_NOTIFICATION = 1;

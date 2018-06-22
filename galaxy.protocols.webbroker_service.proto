@@ -1,6 +1,6 @@
 syntax = "proto2";
 
-package galaxy.protocols.webbroker_service
+package galaxy.protocols.webbroker_service;
 
 enum MessageSort {
     MESSAGE_SORT = 2;

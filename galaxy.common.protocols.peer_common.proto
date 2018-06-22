@@ -1,9 +1,8 @@
 syntax = "proto2";
 
-package galaxy.common.protocols.peer_common
+package galaxy.common.protocols.peer_common;
 
 message Property {
     optional string name = 1;
     optional string value = 2;
 }
-
