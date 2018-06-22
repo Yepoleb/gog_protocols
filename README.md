@@ -1,6 +1,6 @@
-# GOG Protodump
+# GOG Protocols
 
-Dump of GOG protocols using symbol data. Only useful as a base for further reverse engineering, because it does not preserve types, required fields, enums, default values, etc.
+Reverse engineered protobuf files for GOG Galaxy.
 
 # License
 
