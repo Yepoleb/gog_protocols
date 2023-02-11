@@ -255,7 +255,7 @@ message GetLeaderboardsResponse {
         optional DisplayType display_type = 5;
     }
 
-    repeated uint32 leaderboard_definitions = 1;
+    repeated LeaderboardDefinition leaderboard_definitions = 1;
 }
 
 message GetLeaderboardEntriesGlobalRequest {
