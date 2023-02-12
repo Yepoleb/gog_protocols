@@ -266,7 +266,7 @@ message GetLeaderboardEntriesGlobalRequest {
 
 message GetLeaderboardEntriesAroundUserRequest {
     optional fixed64 leaderboard_id = 1;
-    optional uint64 user_id = 2;
+    optional sfixed64 user_id = 2;
     optional uint32 count_before = 3;
     optional uint32 count_after = 4;
 }
@@ -279,12 +279,12 @@ message GetLeaderboardEntriesForUsersRequest {
 message GetLeaderboardEntriesResponse {
     message LeaderboardEntry {
         optional uint32 rank = 1;
-        optional int32 score = 2;
-        optional uint64 user_id = 3;
+        optional uint32 score = 2;
+        optional sfixed64 user_id = 3;
         optional string details = 4;
     }
 
-    optional LeaderboardEntry leaderboard_entries = 1;
+    repeated LeaderboardEntry leaderboard_entries = 1;
     optional uint32 leaderboard_entry_total_count = 2;
 }
 
