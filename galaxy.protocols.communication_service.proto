@@ -273,7 +273,7 @@ message GetLeaderboardEntriesAroundUserRequest {
 
 message GetLeaderboardEntriesForUsersRequest {
     optional fixed64 leaderboard_id = 1;
-    repeated uint64 user_ids = 2;
+    repeated fixed64 user_ids = 2;
 }
 
 message GetLeaderboardEntriesResponse {
