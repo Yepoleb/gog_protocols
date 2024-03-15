@@ -158,7 +158,7 @@ message AuthInfoRequest {
 message AuthInfoResponse {
     optional string refresh_token = 1;
     optional EnvironmentType environment_type = 2;
-    optional uint64 user_id = 3;
+    optional fixed64 user_id = 3;
     optional string user_name = 4;
     optional Region region = 5;
 }
@@ -266,7 +266,7 @@ message GetLeaderboardEntriesGlobalRequest {
 
 message GetLeaderboardEntriesAroundUserRequest {
     optional fixed64 leaderboard_id = 1;
-    optional sfixed64 user_id = 2;
+    optional fixed64 user_id = 2;
     optional uint32 count_before = 3;
     optional uint32 count_after = 4;
 }
@@ -280,7 +280,7 @@ message GetLeaderboardEntriesResponse {
     message LeaderboardEntry {
         optional uint32 rank = 1;
         optional uint32 score = 2;
-        optional sfixed64 user_id = 3;
+        optional fixed64 user_id = 3;
         optional string details = 4;
     }
 
