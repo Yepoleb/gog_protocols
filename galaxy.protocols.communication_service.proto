@@ -289,7 +289,7 @@ message GetLeaderboardEntriesResponse {
 }
 
 message SetLeaderboardScoreRequest {
-    required uint64 leaderboard_id = 1;
+    required fixed64 leaderboard_id = 1;
     required int32 score = 2;
     required bool force_update = 3;
     optional string details = 4 [default = ""];
