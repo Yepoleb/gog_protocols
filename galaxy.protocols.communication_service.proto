@@ -281,7 +281,7 @@ message GetLeaderboardEntriesResponse {
         optional uint32 rank = 1;
         optional uint32 score = 2;
         optional fixed64 user_id = 3;
-        optional string details = 4;
+        optional bytes details = 4;
     }
 
     repeated LeaderboardEntry leaderboard_entries = 1;
@@ -292,7 +292,7 @@ message SetLeaderboardScoreRequest {
     required fixed64 leaderboard_id = 1;
     required int32 score = 2;
     required bool force_update = 3;
-    optional string details = 4 [default = ""];
+    optional bytes details = 4;
 }
 
 message SetLeaderboardScoreResponse {
