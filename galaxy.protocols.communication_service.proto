@@ -153,6 +153,7 @@ message AuthInfoRequest {
     optional PlatformType platform_type = 3;
     optional string steam_ticket = 4;
     optional uint32 game_pid = 5;
+    optional bool openid = 6;
 }
 
 message AuthInfoResponse {
