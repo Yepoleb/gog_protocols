@@ -1,0 +1,35 @@
+syntax = "proto2";
+
+package galaxy.protocols.overlay_for_service;
+
+enum MessageSort {
+    MESSAGE_SORT = 3;
+}
+
+enum MessageType {
+    UNKNOWN_MESSAGE = 0;
+    ACCESS_TOKEN_REQUEST = 1;
+    ACCESS_TOKEN_RESPONSE = 2;
+    SHUTDOWN = 3;
+    NOTIFY_ACHIEVEMENT_UNLOCKED = 4;
+    OVERLAY_INITIALIZATION_NOTIFICATION = 5;
+}
+
+message AccessTokenResponse {
+    required string access_token = 1;
+}
+
+message NotifyAchievementUnlocked {
+    required fixed64 achievement_id = 1;
+    required string key = 2;
+    required string name = 3;
+    required string description = 4;
+    required string image_url_locked = 5;
+    required string image_url_unlocked = 6;
+    required bool visible_while_locked = 7;
+    required fixed64 unlock_time = 8;
+}
+
+message OverlayInitializationNotification {
+    required bool initialized_successfully = 1;
+}

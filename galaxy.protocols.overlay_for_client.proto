@@ -1,0 +1,49 @@
+syntax = "proto2";
+
+package galaxy.protocols.overlay_for_client;
+
+enum MessageSort {
+    MESSAGE_SORT = 7;
+}
+
+enum MessageType {
+    UNKNOWN_MESSAGE = 0;
+    OVERLAY_FRONTEND_INIT_DATA = 1;
+    OVERLAY_FRONTEND_INIT_DATA_REQUEST = 2;
+    OVERLAY_FRONTEND_INIT_DATA_RESPONSE = 3;
+    OVERLAY_TO_CLIENT_REQUEST = 4;
+    OVERLAY_TO_CLIENT_RESPONSE = 5;
+    CLIENT_TO_OVERLAY_REQUEST = 6;
+    CLIENT_TO_OVERLAY_RESPONSE = 7;
+}
+
+message OverlayFrontendInitData {
+    required fixed32 process_id = 1;
+    required string data = 2;
+}
+
+message OverlayFrontendInitDataRequest {
+    required fixed32 process_id = 1;
+}
+
+message OverlayFrontendInitDataResponse {
+    required string data = 1;
+}
+
+message OverlayToClientRequest {
+    required fixed32 process_id = 1;
+    required string data = 2;
+}
+
+message OverlayToClientResponse {
+    required string data = 1;
+}
+
+message ClientToOverlayRequest {
+    required fixed32 process_id = 1;
+    required string data = 2;
+}
+
+message ClientToOverlayResponse {
+    required string data = 1;
+}
